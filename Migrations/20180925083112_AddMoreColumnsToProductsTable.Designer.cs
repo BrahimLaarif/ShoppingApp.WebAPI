@@ -21,7 +21,7 @@ namespace ShoppingApp.WebAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ShoppingApp.WebAPI.Data.Models.Product", b =>
+            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

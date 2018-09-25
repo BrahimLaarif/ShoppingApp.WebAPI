@@ -19,7 +19,7 @@ namespace ShoppingApp.WebAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ShoppingApp.WebAPI.Data.Models.Category", b =>
+            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,7 +33,7 @@ namespace ShoppingApp.WebAPI.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("ShoppingApp.WebAPI.Data.Models.Product", b =>
+            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,9 +56,9 @@ namespace ShoppingApp.WebAPI.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ShoppingApp.WebAPI.Data.Models.Product", b =>
+            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Product", b =>
                 {
-                    b.HasOne("ShoppingApp.WebAPI.Data.Models.Category", "Category")
+                    b.HasOne("ShoppingApp.WebAPI.Entities.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ShoppingApp.WebAPI.Data.Models
+namespace ShoppingApp.WebAPI.Entities.Models
 {
     public class Category
     {

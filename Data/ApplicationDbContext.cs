@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ShoppingApp.WebAPI.Data.Models;
+using ShoppingApp.WebAPI.Entities.Models;
 
 namespace ShoppingApp.WebAPI.Data
 {

@@ -18,15 +18,15 @@ namespace ShoppingApp.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetCategories()
         {
             var categories = await context.Categories.ToListAsync();
 
             return Ok(categories);
         }
 
-        [HttpGet("{id}", Name = nameof(Get))]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("{id}", Name = nameof(GetCategory))]
+        public async Task<IActionResult> GetCategory(int id)
         {
             var category = await context.Categories.FindAsync(id);
 

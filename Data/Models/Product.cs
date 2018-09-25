@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShoppingApp.WebAPI.Data.Models
@@ -8,5 +9,13 @@ namespace ShoppingApp.WebAPI.Data.Models
 
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        public string Description { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

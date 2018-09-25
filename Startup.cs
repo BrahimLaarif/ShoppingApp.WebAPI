@@ -25,6 +25,7 @@ namespace ShoppingApp.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -41,6 +42,7 @@ namespace ShoppingApp.WebAPI
             }
 
             // app.UseHttpsRedirection();
+            app.UseCors(config => config.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseMvc();
         }
     }

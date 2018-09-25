@@ -1,17 +1,17 @@
 [
     {
-        "Name": "Jackets"
+        "Name": "Category 1"
     },
     {
-        "Name": "Shirts"
+        "Name": "Category 2"
     },
     {
-        "Name": "Jeans"
+        "Name": "Category 3"
     },
     {
-        "Name": "Shoes"
+        "Name": "Category 4"
     },
     {
-        "Name": "Accessories"
+        "Name": "Category 5"
     }
 ]

@@ -7,16 +7,20 @@
         "Models": [
             {
                 "ColorId": 1,
-                "Price": 100.00,
                 "ModelSizes": [
                     {
                         "SizeId": 1
                     }
-                ]
+                ],
+                "Photos": [
+                    {
+                        "Url": "http://lorempixel.com/400/600"
+                    }
+                ],
+                "Price": 100.00
             },
             {
                 "ColorId": 2,
-                "Price": 200.00,
                 "ModelSizes": [
                     {
                         "SizeId": 1
@@ -24,7 +28,16 @@
                     {
                         "SizeId": 2
                     }
-                ]
+                ],
+                "Photos": [
+                    {
+                        "Url": "http://lorempixel.com/400/600"
+                    },
+                    {
+                        "Url": "http://lorempixel.com/400/600"
+                    }
+                ],
+                "Price": 200.00
             }
         ]
     }

@@ -29,6 +29,7 @@ namespace ShoppingApp.WebAPI.Controllers
                 .Include(p => p.Category)
                 .Include(p => p.Models).ThenInclude(m => m.Color)
                 .Include(p => p.Models).ThenInclude(m => m.ModelSizes).ThenInclude(ms => ms.Size)
+                .Include(p => p.Models).ThenInclude(m => m.Photos)
                 .ToListAsync();
             
             var result = mapper.Map<IEnumerable<ProductResource>>(products);
@@ -42,6 +43,8 @@ namespace ShoppingApp.WebAPI.Controllers
             var product = await context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Models).ThenInclude(m => m.Color)
+                .Include(p => p.Models).ThenInclude(m => m.ModelSizes).ThenInclude(ms => ms.Size)
+                .Include(p => p.Models).ThenInclude(m => m.Photos)
                 .SingleOrDefaultAsync(p => p.Id == id);
 
             if (product == null)

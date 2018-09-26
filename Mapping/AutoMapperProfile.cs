@@ -12,6 +12,7 @@ namespace ShoppingApp.WebAPI.Mapping
             CreateMap<Color, ColorResource>();
             CreateMap<Material, MaterialResource>();
             CreateMap<Size, SizeResource>();
+            CreateMap<Model, ModelResource>();
             
             CreateMap<Product, ProductResource>();
         }

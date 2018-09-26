@@ -3,6 +3,16 @@
         "CategoryId": 1,
         "Name": "Product 1",
         "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mi neque, luctus sit amet semper condimentum, feugiat sed purus. Integer pretium at tortor elementum posuere.",
-        "Created": "2018-09-25T22:47:32"
+        "Created": "2018-09-25T22:47:32",
+        "Models": [
+            {
+                "ColorId": 1,
+                "MaterialId": 1
+            },
+            {
+                "ColorId": 1,
+                "MaterialId": 2
+            }
+        ]
     }
 ]

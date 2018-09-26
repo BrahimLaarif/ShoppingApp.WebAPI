@@ -25,7 +25,11 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
-            var products = await context.Products.Include(p => p.Category).ToListAsync();
+            var products = await context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Models).ThenInclude(m => m.Color)
+                .Include(p => p.Models).ThenInclude(m => m.Material)
+                .ToListAsync();
             
             var result = mapper.Map<IEnumerable<ProductResource>>(products);
 
@@ -37,6 +41,8 @@ namespace ShoppingApp.WebAPI.Controllers
         {
             var product = await context.Products
                 .Include(p => p.Category)
+                .Include(p => p.Models).ThenInclude(m => m.Color)
+                .Include(p => p.Models).ThenInclude(m => m.Material)
                 .SingleOrDefaultAsync(p => p.Id == id);
 
             if (product == null)

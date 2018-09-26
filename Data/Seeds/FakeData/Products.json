@@ -7,11 +7,24 @@
         "Models": [
             {
                 "ColorId": 1,
-                "MaterialId": 1
+                "Price": 100.00,
+                "ModelSizes": [
+                    {
+                        "SizeId": 1
+                    }
+                ]
             },
             {
-                "ColorId": 1,
-                "MaterialId": 2
+                "ColorId": 2,
+                "Price": 200.00,
+                "ModelSizes": [
+                    {
+                        "SizeId": 1
+                    },
+                    {
+                        "SizeId": 2
+                    }
+                ]
             }
         ]
     }

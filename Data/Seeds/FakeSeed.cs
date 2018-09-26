@@ -19,7 +19,6 @@ namespace ShoppingApp.WebAPI.Data.Seeds
         {
             CategorySeed();
             ColorSeed();
-            MaterialSeed();
             SizeSeed();
             ProductSeed();
         }
@@ -45,18 +44,6 @@ namespace ShoppingApp.WebAPI.Data.Seeds
                 var colors = JsonConvert.DeserializeObject<IEnumerable<Color>>(colorsJsonData);
 
                 context.Colors.AddRange(colors);
-                context.SaveChanges();
-            }
-        }
-
-        private void MaterialSeed()
-        {
-            if (!context.Materials.Any())
-            {
-                var materialsJsonData = System.IO.File.ReadAllText("Data/Seeds/FakeData/Materials.json");
-                var materials = JsonConvert.DeserializeObject<IEnumerable<Material>>(materialsJsonData);
-
-                context.Materials.AddRange(materials);
                 context.SaveChanges();
             }
         }

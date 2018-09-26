@@ -19,7 +19,7 @@ namespace ShoppingApp.WebAPI.Entities.Models
 
         public DateTime Created { get; set; }
 
-        public ICollection<Model> Models { get; set; }
+        public virtual ICollection<Model> Models { get; set; }
 
         public Product()
         {

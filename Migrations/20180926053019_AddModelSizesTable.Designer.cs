@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShoppingApp.WebAPI.Data;
 
 namespace ShoppingApp.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180926053019_AddModelSizesTable")]
+    partial class AddModelSizesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,6 +49,20 @@ namespace ShoppingApp.WebAPI.Migrations
                     b.ToTable("Colors");
                 });
 
+            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Material", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Materials");
+                });
+
             modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Model", b =>
                 {
                     b.Property<int>("Id")
@@ -55,13 +71,15 @@ namespace ShoppingApp.WebAPI.Migrations
 
                     b.Property<int>("ColorId");
 
-                    b.Property<double>("Price");
+                    b.Property<int>("MaterialId");
 
                     b.Property<int>("ProductId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
+
+                    b.HasIndex("MaterialId");
 
                     b.HasIndex("ProductId");
 
@@ -123,6 +141,11 @@ namespace ShoppingApp.WebAPI.Migrations
                     b.HasOne("ShoppingApp.WebAPI.Entities.Models.Color", "Color")
                         .WithMany()
                         .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ShoppingApp.WebAPI.Entities.Models.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ShoppingApp.WebAPI.Entities.Models.Product", "Product")

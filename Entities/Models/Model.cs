@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ShoppingApp.WebAPI.Entities.Models
 {
     public class Model
@@ -10,7 +12,13 @@ namespace ShoppingApp.WebAPI.Entities.Models
         public int ColorId { get; set; }
         public virtual Color Color { get; set; }
 
-        public int MaterialId { get; set; }
-        public virtual Material Material { get; set; }
+        public virtual ICollection<ModelSize> ModelSizes { get; set; }
+
+        public double Price { get; set; }
+        
+        public Model()
+        {
+            ModelSizes = new HashSet<ModelSize>();
+        }
     }
 }

@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingApp.WebAPI.Data;
+using ShoppingApp.WebAPI.Entities.Resources;
 
 namespace ShoppingApp.WebAPI.Controllers
 {
@@ -11,31 +14,37 @@ namespace ShoppingApp.WebAPI.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ApplicationDbContext context;
+        private readonly IMapper mapper;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
-            var products = await context.Products.ToListAsync();
+            var products = await context.Products.Include(p => p.Category).ToListAsync();
+            
+            var result = mapper.Map<IEnumerable<ProductResource>>(products);
 
-            return Ok(products);
+            return Ok(result);
         }
 
         [HttpGet("{id}", Name = nameof(GetProduct))]
         public async Task<IActionResult> GetProduct(int id)
         {
-            var product = await context.Products.FindAsync(id);
+            var product = await context.Products.Include(p => p.Category).SingleOrDefaultAsync(p => p.Id == id);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            return Ok(product);
+            var result = mapper.Map<ProductResource>(product);
+
+            return Ok(result);
         }
     }
 }

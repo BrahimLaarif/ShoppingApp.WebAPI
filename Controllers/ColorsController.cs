@@ -5,44 +5,45 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingApp.WebAPI.Data;
+using ShoppingApp.WebAPI.Entities.Models;
 using ShoppingApp.WebAPI.Entities.Resources;
 
 namespace ShoppingApp.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class ColorsController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
 
-        public CategoriesController(ApplicationDbContext context, IMapper mapper)
+        public ColorsController(ApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCategories()
+        public async Task<IActionResult> GetColors()
         {
-            var categories = await context.Categories.ToListAsync();
+            var colors = await context.Colors.ToListAsync();
 
-            var result = mapper.Map<IEnumerable<CategoryResource>>(categories);
+            var result = mapper.Map<IEnumerable<ColorResource>>(colors);
 
             return Ok(result);
         }
 
-        [HttpGet("{id}", Name = nameof(GetCategory))]
-        public async Task<IActionResult> GetCategory(int id)
+        [HttpGet("{id}", Name = nameof(GetColor))]
+        public async Task<IActionResult> GetColor(int id)
         {
-            var category = await context.Categories.FindAsync(id);
+            var color = await context.Colors.FindAsync(id);
 
-            if (category == null)
+            if (color == null)
             {
                 return NotFound();
             }
 
-            var result = mapper.Map<CategoryResource>(category);
+            var result = mapper.Map<ColorResource>(color);
 
             return Ok(result);
         }

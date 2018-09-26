@@ -17,6 +17,7 @@ namespace ShoppingApp.WebAPI.Data.Seeds
         public void Initialize()
         {
             CategorySeed();
+            ColorSeed();
             ProductSeed();
         }
 
@@ -28,6 +29,18 @@ namespace ShoppingApp.WebAPI.Data.Seeds
                 var categories = JsonConvert.DeserializeObject<IEnumerable<Category>>(categoriesJsonData);
 
                 context.Categories.AddRange(categories);
+                context.SaveChanges();
+            }
+        }
+
+        private void ColorSeed()
+        {
+            if (!context.Colors.Any())
+            {
+                var colorsJsonData = System.IO.File.ReadAllText("Data/Seeds/MockData/Colors.json");
+                var colors = JsonConvert.DeserializeObject<IEnumerable<Color>>(colorsJsonData);
+
+                context.Colors.AddRange(colors);
                 context.SaveChanges();
             }
         }

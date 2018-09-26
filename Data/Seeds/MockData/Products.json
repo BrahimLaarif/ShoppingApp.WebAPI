@@ -3,30 +3,30 @@
         "CategoryId": 1,
         "Name": "Product 1",
         "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mi neque, luctus sit amet semper condimentum, feugiat sed purus. Integer pretium at tortor elementum posuere.",
-        "DateCreated": "2018-09-25T22:47:32"
+        "Created": "2018-09-25T22:47:32"
     },
     {
         "CategoryId": 2,
         "Name": "Product 2",
         "Description": "Nunc pellentesque, dolor eget gravida porta, augue urna iaculis diam, ac auctor metus nisi quis nulla. Curabitur sit amet consequat justo. Quisque rhoncus dignissim lectus in fringilla.",
-        "DateCreated": "2018-09-25T23:35:05"
+        "Created": "2018-09-25T23:35:05"
     },
     {
         "CategoryId": 3,
         "Name": "Product 3",
         "Description": "Duis pharetra ipsum at rutrum dignissim. Pellentesque tellus elit, accumsan at imperdiet eu, auctor vel dolor.",
-        "DateCreated": "2018-09-25T17:25:12"
+        "Created": "2018-09-25T17:25:12"
     },
     {
         "CategoryId": 4,
         "Name": "Product 4",
         "Description": "Duis luctus sed risus vel porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel purus quam. Fusce ut molestie tortor. Suspendisse at maximus urna.",
-        "DateCreated": "2018-09-25T10:41:31"
+        "Created": "2018-09-25T10:41:31"
     },
     {
         "CategoryId": 5,
         "Name": "Product 5",
         "Description": "Cras euismod tempor laoreet. In semper ut nibh id aliquam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-        "DateCreated": "2018-09-25T07:52:43"
+        "Created": "2018-09-25T07:52:43"
     }
 ]

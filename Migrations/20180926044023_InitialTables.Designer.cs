@@ -10,8 +10,8 @@ using ShoppingApp.WebAPI.Data;
 namespace ShoppingApp.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180926011647_AddColorsTable")]
-    partial class AddColorsTable
+    [Migration("20180926044023_InitialTables")]
+    partial class InitialTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,6 +49,20 @@ namespace ShoppingApp.WebAPI.Migrations
                     b.ToTable("Colors");
                 });
 
+            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Material", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Materials");
+                });
+
             modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -70,6 +84,20 @@ namespace ShoppingApp.WebAPI.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Size", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sizes");
                 });
 
             modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Product", b =>

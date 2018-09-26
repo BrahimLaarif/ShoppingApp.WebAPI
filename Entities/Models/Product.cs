@@ -19,11 +19,8 @@ namespace ShoppingApp.WebAPI.Entities.Models
 
         public DateTime Created { get; set; }
 
-        public virtual ICollection<Model> Models { get; set; }
-
         public Product()
         {
-            Models = new HashSet<Model>();
             Created = DateTime.Now;
         }
     }

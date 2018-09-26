@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
@@ -18,7 +19,8 @@ namespace ShoppingApp.WebAPI.Data.Seeds
         {
             CategorySeed();
             ColorSeed();
-            SizeTypeSeed();
+            MaterialSeed();
+            SizeSeed();
             ProductSeed();
         }
 
@@ -34,6 +36,7 @@ namespace ShoppingApp.WebAPI.Data.Seeds
             }
         }
 
+
         private void ColorSeed()
         {
             if (!context.Colors.Any())
@@ -46,14 +49,26 @@ namespace ShoppingApp.WebAPI.Data.Seeds
             }
         }
 
-        private void SizeTypeSeed()
+        private void MaterialSeed()
         {
-            if (!context.SizeTypes.Any())
+            if (!context.Materials.Any())
             {
-                var sizeTypesJsonData = System.IO.File.ReadAllText("Data/Seeds/FakeData/SizeTypes.json");
-                var sizeTypes = JsonConvert.DeserializeObject<IEnumerable<SizeType>>(sizeTypesJsonData);
+                var materialsJsonData = System.IO.File.ReadAllText("Data/Seeds/FakeData/Materials.json");
+                var materials = JsonConvert.DeserializeObject<IEnumerable<Material>>(materialsJsonData);
 
-                context.SizeTypes.AddRange(sizeTypes);
+                context.Materials.AddRange(materials);
+                context.SaveChanges();
+            }
+        }
+
+        private void SizeSeed()
+        {
+            if (!context.Sizes.Any())
+            {
+                var sizeJsonData = System.IO.File.ReadAllText("Data/Seeds/FakeData/Sizes.json");
+                var size = JsonConvert.DeserializeObject<IEnumerable<Size>>(sizeJsonData);
+
+                context.Sizes.AddRange(size);
                 context.SaveChanges();
             }
         }

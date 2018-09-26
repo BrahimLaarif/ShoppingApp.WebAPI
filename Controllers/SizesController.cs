@@ -11,38 +11,38 @@ namespace ShoppingApp.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SizeTypesController : ControllerBase
+    public class SizesController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
 
-        public SizeTypesController(ApplicationDbContext context, IMapper mapper)
+        public SizesController(ApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetSizeTypes()
+        public async Task<IActionResult> GetSizes()
         {
-            var sizeTypes = await context.SizeTypes.ToListAsync();
+            var sizes = await context.Sizes.ToListAsync();
 
-            var result = mapper.Map<IEnumerable<SizeTypeResource>>(sizeTypes);
+            var result = mapper.Map<IEnumerable<SizeResource>>(sizes);
 
             return Ok(result);
         }
 
-        [HttpGet("{id}", Name = nameof(GetSizeType))]
-        public async Task<IActionResult> GetSizeType(int id)
+        [HttpGet("{id}", Name = nameof(GetSize))]
+        public async Task<IActionResult> GetSize(int id)
         {
-            var sizeType = await context.SizeTypes.FindAsync(id);
+            var size = await context.Sizes.FindAsync(id);
 
-            if (sizeType == null)
+            if (size == null)
             {
                 return NotFound();
             }
 
-            var result = mapper.Map<SizeTypeResource>(sizeType);
+            var result = mapper.Map<SizeResource>(size);
 
             return Ok(result);
         }

@@ -47,23 +47,18 @@ namespace ShoppingApp.WebAPI.Migrations
                     b.ToTable("Colors");
                 });
 
-            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Model", b =>
+            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Material", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ColorId");
-
-                    b.Property<int>("ProductId");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColorId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Models");
+                    b.ToTable("Materials");
                 });
 
             modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Product", b =>
@@ -95,46 +90,12 @@ namespace ShoppingApp.WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ModelId");
-
-                    b.Property<double>("Price");
-
-                    b.Property<int>("SizeTypeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ModelId");
-
-                    b.HasIndex("SizeTypeId");
-
-                    b.ToTable("Sizes");
-                });
-
-            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.SizeType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("Name")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.ToTable("SizeTypes");
-                });
-
-            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Model", b =>
-                {
-                    b.HasOne("ShoppingApp.WebAPI.Entities.Models.Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ShoppingApp.WebAPI.Entities.Models.Product", "Product")
-                        .WithMany("Models")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.ToTable("Sizes");
                 });
 
             modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Product", b =>
@@ -142,19 +103,6 @@ namespace ShoppingApp.WebAPI.Migrations
                     b.HasOne("ShoppingApp.WebAPI.Entities.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ShoppingApp.WebAPI.Entities.Models.Size", b =>
-                {
-                    b.HasOne("ShoppingApp.WebAPI.Entities.Models.Model", "Model")
-                        .WithMany("Sizes")
-                        .HasForeignKey("ModelId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ShoppingApp.WebAPI.Entities.Models.SizeType", "SizeType")
-                        .WithMany()
-                        .HasForeignKey("SizeTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

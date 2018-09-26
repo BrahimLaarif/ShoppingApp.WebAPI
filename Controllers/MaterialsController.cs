@@ -11,40 +11,38 @@ namespace ShoppingApp.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class MaterialsController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
 
-        public ProductsController(ApplicationDbContext context, IMapper mapper)
+        public MaterialsController(ApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetMaterials()
         {
-            var products = await context.Products.Include(p => p.Category).ToListAsync();
-            
-            var result = mapper.Map<IEnumerable<ProductResource>>(products);
+            var materials = await context.Materials.ToListAsync();
+
+            var result = mapper.Map<IEnumerable<MaterialResource>>(materials);
 
             return Ok(result);
         }
 
-        [HttpGet("{id}", Name = nameof(GetProduct))]
-        public async Task<IActionResult> GetProduct(int id)
+        [HttpGet("{id}", Name = nameof(GetMaterial))]
+        public async Task<IActionResult> GetMaterial(int id)
         {
-            var product = await context.Products
-                .Include(p => p.Category)
-                .SingleOrDefaultAsync(p => p.Id == id);
+            var material = await context.Materials.FindAsync(id);
 
-            if (product == null)
+            if (material == null)
             {
                 return NotFound();
             }
 
-            var result = mapper.Map<ProductResource>(product);
+            var result = mapper.Map<MaterialResource>(material);
 
             return Ok(result);
         }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ShoppingApp.WebAPI.Entities.Models
 {
-    public class SizeType
+    public class Material
     {
         public int Id { get; set; }
 

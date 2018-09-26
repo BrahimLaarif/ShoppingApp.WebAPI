@@ -4,29 +4,5 @@
         "Name": "Product 1",
         "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mi neque, luctus sit amet semper condimentum, feugiat sed purus. Integer pretium at tortor elementum posuere.",
         "Created": "2018-09-25T22:47:32"
-    },
-    {
-        "CategoryId": 2,
-        "Name": "Product 2",
-        "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mi neque, luctus sit amet semper condimentum, feugiat sed purus. Integer pretium at tortor elementum posuere.",
-        "Created": "2018-09-25T22:47:32"
-    },
-    {
-        "CategoryId": 3,
-        "Name": "Product 3",
-        "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mi neque, luctus sit amet semper condimentum, feugiat sed purus. Integer pretium at tortor elementum posuere.",
-        "Created": "2018-09-25T22:47:32"
-    },
-    {
-        "CategoryId": 4,
-        "Name": "Product 4",
-        "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mi neque, luctus sit amet semper condimentum, feugiat sed purus. Integer pretium at tortor elementum posuere.",
-        "Created": "2018-09-25T22:47:32"
-    },
-    {
-        "CategoryId": 5,
-        "Name": "Product 5",
-        "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mi neque, luctus sit amet semper condimentum, feugiat sed purus. Integer pretium at tortor elementum posuere.",
-        "Created": "2018-09-25T22:47:32"
     }
 ]

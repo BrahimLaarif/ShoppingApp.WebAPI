@@ -9,6 +9,8 @@ namespace ShoppingApp.WebAPI.Mapping
         public AutoMapperProfile()
         {
             CreateMap<Category, CategoryResource>();
+            CreateMap<Color, CategoryResource>();
+            CreateMap<SizeType, SizeTypeResource>();
             CreateMap<Product, ProductResource>();
         }
     }

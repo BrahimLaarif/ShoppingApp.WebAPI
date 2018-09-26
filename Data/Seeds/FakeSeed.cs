@@ -18,6 +18,7 @@ namespace ShoppingApp.WebAPI.Data.Seeds
         {
             CategorySeed();
             ColorSeed();
+            SizeTypeSeed();
             ProductSeed();
         }
 
@@ -25,7 +26,7 @@ namespace ShoppingApp.WebAPI.Data.Seeds
         {
             if (!context.Categories.Any())
             {
-                var categoriesJsonData = System.IO.File.ReadAllText("Data/Seeds/MockData/Categories.json");
+                var categoriesJsonData = System.IO.File.ReadAllText("Data/Seeds/FakeData/Categories.json");
                 var categories = JsonConvert.DeserializeObject<IEnumerable<Category>>(categoriesJsonData);
 
                 context.Categories.AddRange(categories);
@@ -37,10 +38,22 @@ namespace ShoppingApp.WebAPI.Data.Seeds
         {
             if (!context.Colors.Any())
             {
-                var colorsJsonData = System.IO.File.ReadAllText("Data/Seeds/MockData/Colors.json");
+                var colorsJsonData = System.IO.File.ReadAllText("Data/Seeds/FakeData/Colors.json");
                 var colors = JsonConvert.DeserializeObject<IEnumerable<Color>>(colorsJsonData);
 
                 context.Colors.AddRange(colors);
+                context.SaveChanges();
+            }
+        }
+
+        private void SizeTypeSeed()
+        {
+            if (!context.SizeTypes.Any())
+            {
+                var sizeTypesJsonData = System.IO.File.ReadAllText("Data/Seeds/FakeData/SizeTypes.json");
+                var sizeTypes = JsonConvert.DeserializeObject<IEnumerable<SizeType>>(sizeTypesJsonData);
+
+                context.SizeTypes.AddRange(sizeTypes);
                 context.SaveChanges();
             }
         }
@@ -49,7 +62,7 @@ namespace ShoppingApp.WebAPI.Data.Seeds
         {
             if (!context.Products.Any())
             {
-                var productsJsonData = System.IO.File.ReadAllText("Data/Seeds/MockData/Products.json");
+                var productsJsonData = System.IO.File.ReadAllText("Data/Seeds/FakeData/Products.json");
                 var products = JsonConvert.DeserializeObject<IEnumerable<Product>>(productsJsonData);
 
                 context.Products.AddRange(products);

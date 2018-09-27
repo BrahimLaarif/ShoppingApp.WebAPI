@@ -15,13 +15,5 @@ namespace ShoppingApp.WebAPI.Entities.Resources
 
         [Required]
         public string Description { get; set; }
-
-        [EnsureOneElement(ErrorMessage = "At least one model is required")]
-        public ICollection<SaveModelResource> Models { get; set; }
-        
-        public SaveProductResource()
-        {
-            Models = new Collection<SaveModelResource>();
-        }
     }
 }

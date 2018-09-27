@@ -35,24 +35,5 @@ namespace ShoppingApp.WebAPI.Controllers
 
             return Ok(result);
         }
-
-        [HttpGet("{id}", Name = nameof(GetPhoto))]
-        public async Task<IActionResult> GetPhoto(int productId, int modelId, int id)
-        {
-            var photo = await context.Photos
-                .Where(p => p.ModelId == modelId)
-                .Include(p => p.Model)
-                .Where(p => p.Model.ProductId == productId)
-                .SingleOrDefaultAsync(p => p.Id == id);
-
-            if (photo == null)
-            {
-                return NotFound();
-            }
-
-            var result = mapper.Map<PhotoResource>(photo);
-
-            return Ok(result);
-        }
     }
 }

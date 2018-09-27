@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ShoppingApp.WebAPI.Entities.Resources
 {
@@ -15,8 +16,8 @@ namespace ShoppingApp.WebAPI.Entities.Resources
 
         public ProductResource()
         {
-            Colors = new HashSet<ColorResource>();
-            Models = new HashSet<ModelResource>();
+            Colors = new Collection<ColorResource>();
+            Models = new Collection<ModelResource>();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShoppingApp.WebAPI.Entities.Models
@@ -24,7 +25,7 @@ namespace ShoppingApp.WebAPI.Entities.Models
         public Product()
         {
             Created = DateTime.Now;
-            Models = new HashSet<Model>();
+            Models = new Collection<Model>();
         }
     }
 }

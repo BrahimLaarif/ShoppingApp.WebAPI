@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using ShoppingApp.WebAPI.Entities.Models;
 
 namespace ShoppingApp.WebAPI.Entities.Resources
@@ -13,8 +14,8 @@ namespace ShoppingApp.WebAPI.Entities.Resources
 
         public ModelResource()
         {
-            Sizes = new HashSet<SizeResource>();
-            Photos = new HashSet<PhotoResource>();
+            Sizes = new Collection<SizeResource>();
+            Photos = new Collection<PhotoResource>();
         }
     }
 }

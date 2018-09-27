@@ -10,15 +10,18 @@ namespace ShoppingApp.WebAPI.Mapping
     {
         public AutoMapperProfile()
         {
+            // Mapping GET request
             CreateMap<Category, CategoryResource>();
             CreateMap<Color, ColorResource>();
             CreateMap<Size, SizeResource>();
             CreateMap<Model, ModelResource>()
                 .ForMember(mr => mr.Sizes, opt => opt.MapFrom(m => m.ModelSizes.Select(ms => ms.Size)));
             CreateMap<Photo, PhotoResource>();
-
             CreateMap<Product, ProductResource>()
                 .ForMember(pr => pr.Colors, opt => opt.MapFrom(p => p.Models.Select(m => m.Color).GroupBy(c => c.Id).Select(c => c.First())));
+            
+            // Mapping POST request
+            CreateMap<SaveProductResource, Product>();
         }
     }
 }

@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingApp.WebAPI.Data;
+using ShoppingApp.WebAPI.Entities.Models;
 using ShoppingApp.WebAPI.Entities.Resources;
 
 namespace ShoppingApp.WebAPI.Controllers
@@ -55,6 +56,67 @@ namespace ShoppingApp.WebAPI.Controllers
             var result = mapper.Map<ProductResource>(product);
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] SaveProductResource saveProductResource)
+        {
+            var category = await context.Categories.FindAsync(saveProductResource.CategoryId);
+
+            if (category == null)
+            {
+                ModelState.AddModelError("CategoryId", "Invalid CategoryId");
+                return BadRequest(ModelState);
+            }
+            
+            var product = mapper.Map<Product>(saveProductResource);
+
+            context.Products.Add(product);
+            await context.SaveChangesAsync();
+
+            return CreatedAtRoute(nameof(GetProduct), new { id = product.Id }, product);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] SaveProductResource saveProductResource)
+        {
+            var category = await context.Categories.FindAsync(saveProductResource.CategoryId);
+
+            if (category == null)
+            {
+                ModelState.AddModelError("CategoryId", "Invalid CategoryId");
+                return BadRequest(ModelState);
+            }
+            
+            var product = await context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            mapper.Map<SaveProductResource, Product>(saveProductResource, product);
+
+            context.Products.Update(product);
+            await context.SaveChangesAsync();
+
+            return Ok(product);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            context.Products.Remove(product);
+            await context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

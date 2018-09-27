@@ -20,7 +20,7 @@ namespace ShoppingApp.WebAPI.Data.Seeds
             CategorySeed();
             ColorSeed();
             SizeSeed();
-            ProductSeed();
+            // ProductSeed();
         }
 
         private void CategorySeed()

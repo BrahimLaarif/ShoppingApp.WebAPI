@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ShoppingApp.WebAPI.Entities.Models
 {
@@ -19,8 +20,8 @@ namespace ShoppingApp.WebAPI.Entities.Models
         
         public Model()
         {
-            ModelSizes = new HashSet<ModelSize>();
-            Photos = new HashSet<Photo>();
+            ModelSizes = new Collection<ModelSize>();
+            Photos = new Collection<Photo>();
         }
     }
 }

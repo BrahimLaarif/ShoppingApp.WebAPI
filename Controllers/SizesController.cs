@@ -9,7 +9,7 @@ using ShoppingApp.WebAPI.Entities.Resources;
 
 namespace ShoppingApp.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/sizes")]
     [ApiController]
     public class SizesController : ControllerBase
     {

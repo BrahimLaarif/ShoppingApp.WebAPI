@@ -9,7 +9,7 @@ using ShoppingApp.WebAPI.Entities.Resources;
 
 namespace ShoppingApp.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/categories")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {

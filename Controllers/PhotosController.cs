@@ -25,18 +25,11 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPhotos(int productId, int modelId)
         {
-            var models = await context.Models
-                .Where(m => m.ProductId == productId)
-                .Where(m => m.Id == modelId)
-                .Include(m => m.Photos)
-                .SingleOrDefaultAsync(m => m.Id == modelId);
-            
-            if (models == null)
-            {
-                return NotFound();
-            }
-
-            var photos = models.Photos.ToList();
+            var photos = await context.Photos
+                .Where(p => p.ModelId == modelId)
+                .Include(p => p.Model)
+                .Where(p => p.Model.ProductId == productId)
+                .ToListAsync();
             
             var result = mapper.Map<IEnumerable<PhotoResource>>(photos);
 
@@ -46,7 +39,11 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpGet("{id}", Name = nameof(GetPhoto))]
         public async Task<IActionResult> GetPhoto(int productId, int modelId, int id)
         {
-            var photo = await context.Photos.FindAsync(id);
+            var photo = await context.Photos
+                .Where(p => p.ModelId == modelId)
+                .Include(p => p.Model)
+                .Where(p => p.Model.ProductId == productId)
+                .SingleOrDefaultAsync(p => p.Id == id);
 
             if (photo == null)
             {

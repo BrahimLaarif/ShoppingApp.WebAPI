@@ -12,16 +12,61 @@ namespace ShoppingApp.WebAPI.Mapping
         {
             // Mapping GET request
             CreateMap<Category, CategoryResource>();
+            CreateMap<Product, ProductResource>();
+            CreateMap<Model, ModelResource>()
+                .ForMember(mr => mr.Sizes, opt => opt.MapFrom(m => m.ModelSizes.Select(ms => ms.SizeId)));
             CreateMap<Color, ColorResource>();
             CreateMap<Size, SizeResource>();
-            CreateMap<Model, ModelResource>()
-                .ForMember(mr => mr.Sizes, opt => opt.MapFrom(m => m.ModelSizes.Select(ms => ms.Size)));
             CreateMap<Photo, PhotoResource>();
-            CreateMap<Product, ProductResource>()
-                .ForMember(pr => pr.Colors, opt => opt.MapFrom(p => p.Models.Select(m => m.Color).GroupBy(c => c.Id).Select(c => c.First())));
             
             // Mapping POST request
-            CreateMap<SaveProductResource, Product>();
+            CreateMap<SaveProductResource, Product>()
+                .ForMember(p => p.Id, opt => opt.Ignore());
+            CreateMap<SaveModelResource, Model>()
+                .ForMember(m => m.Id, opt => opt.Ignore())
+                .ForMember(m => m.ModelSizes, opt => opt.Ignore())
+                .AfterMap((mr, m) => {
+                    // Remove unselected ModelSizes
+                    var removedModelSizes = new List<ModelSize>();
+                    foreach(var ms in m.ModelSizes)
+                    {
+                        if (!mr.Sizes.Contains(ms.SizeId))
+                        {
+                            removedModelSizes.Add(ms);
+                        }
+                    }
+
+                    foreach(var modelSize in removedModelSizes)
+                    {
+                        m.ModelSizes.Remove(modelSize);
+                    }
+
+                    // Add new ModelSizes
+                    foreach(var sizeId in mr.Sizes)
+                    {
+                        if (!m.ModelSizes.Any(ms => ms.SizeId == sizeId))
+                        {
+                            m.ModelSizes.Add(new ModelSize() { SizeId = sizeId });
+                        }
+                    }
+
+                    /*
+                    // Better solutions with Linq
+                    // Remove unselected ModelSizes
+                    var removedModelSizes = m.ModelSizes.Where(ms => !mr.Sizes.Contains(ms.SizeId));
+                    foreach(var modelSize in removedModelSizes)
+                    {
+                        m.ModelSizes.Remove(modelSize);
+                    }
+
+                    // Add new ModelSizes
+                    var addedModelSizes = mr.Sizes.Where(sizeId => !m.ModelSizes.Any(ms => ms.SizeId == sizeId)).Select(sizeId => new ModelSize() { SizeId = sizeId });
+                    foreach(var modelSize in addedModelSizes)
+                    {
+                        m.ModelSizes.Add(modelSize);
+                    }
+                    */
+                });
         }
     }
 }

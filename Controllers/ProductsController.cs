@@ -59,35 +59,37 @@ namespace ShoppingApp.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] SaveProductResource saveProductResource)
+        public async Task<IActionResult> Post([FromBody] SaveProductResource payload)
         {
-            var category = await context.Categories.FindAsync(saveProductResource.CategoryId);
+            var category = await context.Categories.FindAsync(payload.CategoryId);
 
             if (category == null)
             {
                 ModelState.AddModelError("CategoryId", "Invalid CategoryId");
                 return BadRequest(ModelState);
             }
-            
-            var product = mapper.Map<Product>(saveProductResource);
+
+            var product = mapper.Map<Product>(payload);
 
             context.Products.Add(product);
             await context.SaveChangesAsync();
 
-            return CreatedAtRoute(nameof(GetProduct), new { id = product.Id }, product);
+            var result = mapper.Map<ProductResource>(product);
+
+            return CreatedAtRoute(nameof(GetProduct), new { id = product.Id }, result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] SaveProductResource saveProductResource)
+        public async Task<IActionResult> Put(int id, [FromBody] SaveProductResource payload)
         {
-            var category = await context.Categories.FindAsync(saveProductResource.CategoryId);
+            var category = await context.Categories.FindAsync(payload.CategoryId);
 
             if (category == null)
             {
                 ModelState.AddModelError("CategoryId", "Invalid CategoryId");
                 return BadRequest(ModelState);
             }
-            
+
             var product = await context.Products.FindAsync(id);
 
             if (product == null)
@@ -95,12 +97,11 @@ namespace ShoppingApp.WebAPI.Controllers
                 return NotFound();
             }
 
-            mapper.Map<SaveProductResource, Product>(saveProductResource, product);
+            mapper.Map<SaveProductResource, Product>(payload, product);
 
-            context.Products.Update(product);
             await context.SaveChangesAsync();
 
-            return Ok(product);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]

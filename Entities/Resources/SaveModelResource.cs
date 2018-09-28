@@ -1,21 +1,22 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using ShoppingApp.WebAPI.Entities.Models;
+using ShoppingApp.WebAPI.Common.Utilities;
 
 namespace ShoppingApp.WebAPI.Entities.Resources
 {
-    public class ModelResource
+    public class SaveModelResource
     {
         public int Id { get; set; }
-        public ColorResource Color { get; set; }
+        public int ColorId { get; set; }
+
+        [EnsureOneElementAttribute(ErrorMessage = "At least one size is required")]
         public ICollection<int> Sizes { get; set; }
-        public ICollection<PhotoResource> Photos { get; set; }
+        
         public double Price { get; set; }
 
-        public ModelResource()
+        public SaveModelResource()
         {
             Sizes = new Collection<int>();
-            Photos = new Collection<PhotoResource>();
         }
     }
 }

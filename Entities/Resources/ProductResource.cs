@@ -11,12 +11,10 @@ namespace ShoppingApp.WebAPI.Entities.Resources
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Created { get; set; }
-        public ICollection<ColorResource> Colors { get; set; }
         public ICollection<ModelResource> Models { get; set; }
 
         public ProductResource()
         {
-            Colors = new Collection<ColorResource>();
             Models = new Collection<ModelResource>();
         }
     }

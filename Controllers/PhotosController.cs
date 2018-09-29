@@ -13,6 +13,7 @@ using ShoppingApp.WebAPI.Data;
 using ShoppingApp.WebAPI.Data.Repositories;
 using ShoppingApp.WebAPI.Entities.Models;
 using ShoppingApp.WebAPI.Entities.Resources;
+using ShoppingApp.WebAPI.Services;
 
 namespace ShoppingApp.WebAPI.Controllers
 {
@@ -23,16 +24,14 @@ namespace ShoppingApp.WebAPI.Controllers
         private readonly IApplicationRepository repository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
-        private readonly IConfiguration configuration;
-        private readonly IHostingEnvironment hosting;
+        private readonly IPhotoService photoService;
 
-        public PhotosController(IApplicationRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, IHostingEnvironment hosting)
+        public PhotosController(IApplicationRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
-            this.configuration = configuration;
-            this.hosting = hosting;
+            this.photoService = photoService;
         }
 
         [HttpGet]
@@ -84,32 +83,7 @@ namespace ShoppingApp.WebAPI.Controllers
                 return NotFound();
             }
 
-            var uploadsFolderName = configuration.GetSection("UploadsFolderName").Value;
-            var uploadsFolderPath = Path.Combine(hosting.WebRootPath, uploadsFolderName);
-
-            if (!Directory.Exists(uploadsFolderPath))
-            {
-                Directory.CreateDirectory(uploadsFolderPath);
-            }
-
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(payload.File.FileName);
-            var filePath = Path.Combine(uploadsFolderPath, fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await payload.File.CopyToAsync(stream);
-            }
-
-            var photo = new Photo()
-            {
-                ModelId = model.Id,
-                FilePath = Path.Combine(uploadsFolderName, fileName),
-                FileName = fileName,
-                Length = payload.File.Length
-            };
-
-            model.Photos.Add(photo);
-            await unitOfWork.CompleteAsync();
+            var photo = await photoService.Upload(model, payload.File);
 
             var result = mapper.Map<PhotoResource>(photo);
 

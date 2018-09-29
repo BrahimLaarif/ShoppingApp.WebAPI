@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using ShoppingApp.WebAPI.Data;
 using ShoppingApp.WebAPI.Data.Repositories;
 using ShoppingApp.WebAPI.Data.Seeds;
+using ShoppingApp.WebAPI.Services;
 
 namespace ShoppingApp.WebAPI
 {
@@ -34,6 +35,7 @@ namespace ShoppingApp.WebAPI
             services.AddCors();
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<ISeed, FakeSeed>();
+            services.AddTransient<IPhotoService, PhotoService>();
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper();

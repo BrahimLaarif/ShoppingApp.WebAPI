@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingApp.WebAPI.Data;
+using ShoppingApp.WebAPI.Data.Repositories;
 using ShoppingApp.WebAPI.Entities.Models;
 using ShoppingApp.WebAPI.Entities.Resources;
 
@@ -14,25 +15,22 @@ namespace ShoppingApp.WebAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly ApplicationDbContext context;
+        private readonly IApplicationRepository repository;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
-        public ProductsController(ApplicationDbContext context, IMapper mapper)
+        public ProductsController(IApplicationRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
         {
-            this.context = context;
+            this.repository = repository;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
-            var products = await context.Products
-                .Include(p => p.Category)
-                .Include(p => p.Models).ThenInclude(m => m.Color)
-                .Include(p => p.Models).ThenInclude(m => m.ModelSizes).ThenInclude(ms => ms.Size)
-                .Include(p => p.Models).ThenInclude(m => m.Photos)
-                .ToListAsync();
-            
+            var products = await repository.GetProducts();
+
             var result = mapper.Map<IEnumerable<ProductResource>>(products);
 
             return Ok(result);
@@ -41,12 +39,7 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpGet("{id}", Name = nameof(GetProduct))]
         public async Task<IActionResult> GetProduct(int id)
         {
-            var product = await context.Products
-                .Include(p => p.Category)
-                .Include(p => p.Models).ThenInclude(m => m.Color)
-                .Include(p => p.Models).ThenInclude(m => m.ModelSizes).ThenInclude(ms => ms.Size)
-                .Include(p => p.Models).ThenInclude(m => m.Photos)
-                .SingleOrDefaultAsync(p => p.Id == id);
+            var product = await repository.GetProduct(id);
 
             if (product == null)
             {
@@ -61,7 +54,7 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] SaveProductResource payload)
         {
-            var category = await context.Categories.FindAsync(payload.CategoryId);
+            var category = await repository.GetCategory(payload.CategoryId);
 
             if (category == null)
             {
@@ -71,8 +64,8 @@ namespace ShoppingApp.WebAPI.Controllers
 
             var product = mapper.Map<Product>(payload);
 
-            context.Products.Add(product);
-            await context.SaveChangesAsync();
+            repository.AddProduct(product);
+            await unitOfWork.CompleteAsync();
 
             var result = mapper.Map<ProductResource>(product);
 
@@ -82,7 +75,7 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] SaveProductResource payload)
         {
-            var category = await context.Categories.FindAsync(payload.CategoryId);
+            var category = await repository.GetCategory(payload.CategoryId);
 
             if (category == null)
             {
@@ -90,7 +83,7 @@ namespace ShoppingApp.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var product = await context.Products.FindAsync(id);
+            var product = await repository.GetProduct(id);
 
             if (product == null)
             {
@@ -99,7 +92,7 @@ namespace ShoppingApp.WebAPI.Controllers
 
             mapper.Map<SaveProductResource, Product>(payload, product);
 
-            await context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             return NoContent();
         }
@@ -107,15 +100,15 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var product = await context.Products.FindAsync(id);
+            var product = await repository.GetProduct(id);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            context.Products.Remove(product);
-            await context.SaveChangesAsync();
+            repository.RemoveProduct(product);
+            await unitOfWork.CompleteAsync();
 
             return NoContent();
         }

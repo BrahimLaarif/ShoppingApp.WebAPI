@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingApp.WebAPI.Data;
+using ShoppingApp.WebAPI.Data.Repositories;
 using ShoppingApp.WebAPI.Entities.Resources;
 
 namespace ShoppingApp.WebAPI.Controllers
@@ -13,19 +14,19 @@ namespace ShoppingApp.WebAPI.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ApplicationDbContext context;
+        private readonly IApplicationRepository repository;
         private readonly IMapper mapper;
 
-        public CategoriesController(ApplicationDbContext context, IMapper mapper)
+        public CategoriesController(IApplicationRepository repository, IMapper mapper)
         {
-            this.context = context;
+            this.repository = repository;
             this.mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
-            var categories = await context.Categories.ToListAsync();
+            var categories = await repository.GetCategories();
 
             var result = mapper.Map<IEnumerable<CategoryResource>>(categories);
 
@@ -35,7 +36,7 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpGet("{id}", Name = nameof(GetCategory))]
         public async Task<IActionResult> GetCategory(int id)
         {
-            var category = await context.Categories.FindAsync(id);
+            var category = await repository.GetCategory(id);
 
             if (category == null)
             {

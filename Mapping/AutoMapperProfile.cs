@@ -67,6 +67,8 @@ namespace ShoppingApp.WebAPI.Mapping
                     }
                     */
                 });
+            CreateMap<SavePhotoResource, Photo>()
+                .ForMember(p => p.Id, opt => opt.Ignore());
         }
     }
 }

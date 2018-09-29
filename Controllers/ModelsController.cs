@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingApp.WebAPI.Data;
+using ShoppingApp.WebAPI.Data.Repositories;
 using ShoppingApp.WebAPI.Entities.Models;
 using ShoppingApp.WebAPI.Entities.Resources;
 
@@ -14,24 +15,28 @@ namespace ShoppingApp.WebAPI.Controllers
     [ApiController]
     public class ModelsController : ControllerBase
     {
-        private readonly ApplicationDbContext context;
+        private readonly IApplicationRepository repository;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
-        public ModelsController(ApplicationDbContext context, IMapper mapper)
+        public ModelsController(IApplicationRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
         {
-            this.context = context;
+            this.repository = repository;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetModels(int productId)
         {
-            var models = await context.Models
-                .Include(m => m.Color)
-                .Include(m => m.ModelSizes).ThenInclude(ms => ms.Size)
-                .Include(m => m.Photos)
-                .Where(m => m.ProductId == productId)
-                .ToListAsync();
+            var product = await repository.GetProduct(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var models = await repository.GetModels(productId);
 
             var result = mapper.Map<IEnumerable<ModelResource>>(models);
 
@@ -41,24 +46,20 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpGet("{id}", Name = nameof(GetModel))]
         public async Task<IActionResult> GetModel(int productId, int id)
         {
-            var product = await context.Products.FindAsync(productId);
+            var product = await repository.GetProduct(productId);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            var model = await context.Models
-                .Include(m => m.Color)
-                .Include(m => m.ModelSizes).ThenInclude(ms => ms.Size)
-                .Include(m => m.Photos)
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var model = await repository.GetModel(productId, id);
 
             if (model == null)
             {
                 return NotFound();
             }
-            
+
             var result = mapper.Map<ModelResource>(model);
 
             return Ok(result);
@@ -67,16 +68,14 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(int productId, [FromBody] SaveModelResource payload)
         {
-            var product = await context.Products
-                .Include(p => p.Category)
-                .SingleOrDefaultAsync(p => p.Id == productId);
+            var product = await repository.GetProduct(productId);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            var color = await context.Colors.FindAsync(payload.ColorId);
+            var color = await repository.GetColor(payload.ColorId);
 
             if (color == null)
             {
@@ -84,9 +83,9 @@ namespace ShoppingApp.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            foreach(var sizeId in payload.Sizes)
+            foreach (var sizeId in payload.Sizes)
             {
-                if (await context.Sizes.FindAsync(sizeId) == null)
+                if (await repository.GetSize(sizeId) == null)
                 {
                     ModelState.AddModelError("SizeId", "Invalid SizeId");
                     return BadRequest(ModelState);
@@ -96,7 +95,7 @@ namespace ShoppingApp.WebAPI.Controllers
             var model = mapper.Map<Model>(payload);
 
             product.Models.Add(model);
-            await context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             var result = mapper.Map<ModelResource>(model);
 
@@ -106,16 +105,14 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int productId, int id, [FromBody] SaveModelResource payload)
         {
-            var product = await context.Products
-                .Include(p => p.Category)
-                .SingleOrDefaultAsync(p => p.Id == productId);
+            var product = await repository.GetProduct(productId);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            var color = await context.Colors.FindAsync(payload.ColorId);
+            var color = await repository.GetColor(payload.ColorId);
 
             if (color == null)
             {
@@ -123,18 +120,16 @@ namespace ShoppingApp.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            foreach(var sizeId in payload.Sizes)
+            foreach (var sizeId in payload.Sizes)
             {
-                if (await context.Sizes.FindAsync(sizeId) == null)
+                if (await repository.GetSize(sizeId) == null)
                 {
                     ModelState.AddModelError("SizeId", "Invalid SizeId");
                     return BadRequest(ModelState);
                 }
             }
 
-            var model = await context.Models
-                .Include(m => m.ModelSizes)
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var model = await repository.GetModel(productId, id);
 
             if (model == null)
             {
@@ -143,22 +138,22 @@ namespace ShoppingApp.WebAPI.Controllers
 
             mapper.Map<SaveModelResource, Model>(payload, model);
 
-            await context.SaveChangesAsync();
-            
+            await unitOfWork.CompleteAsync();
+
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int productId, int id)
         {
-            var product = await context.Products.FindAsync(productId);
+            var product = await repository.GetProduct(productId);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            var model = await context.Models.FindAsync(id);
+            var model = await repository.GetModel(productId, id);
 
             if (model == null)
             {
@@ -166,7 +161,7 @@ namespace ShoppingApp.WebAPI.Controllers
             }
 
             product.Models.Remove(model);
-            await context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             return NoContent();
         }

@@ -12,11 +12,7 @@
                         "SizeId": 1
                     }
                 ],
-                "Photos": [
-                    {
-                        "Url": "http://lorempixel.com/400/600"
-                    }
-                ],
+                "Photos": [],
                 "Price": 100.00
             },
             {
@@ -29,14 +25,7 @@
                         "SizeId": 2
                     }
                 ],
-                "Photos": [
-                    {
-                        "Url": "http://lorempixel.com/400/600"
-                    },
-                    {
-                        "Url": "http://lorempixel.com/400/600"
-                    }
-                ],
+                "Photos": [],
                 "Price": 200.00
             }
         ]

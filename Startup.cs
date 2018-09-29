@@ -37,6 +37,7 @@ namespace ShoppingApp.WebAPI
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper();
+            services.AddHttpContextAccessor();
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(opt => {
@@ -59,6 +60,7 @@ namespace ShoppingApp.WebAPI
             // app.UseHttpsRedirection();
             app.UseCors(config => config.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             seed.Initialize();
+            app.UseStaticFiles();
             app.UseMvc();
         }
     }

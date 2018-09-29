@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace ShoppingApp.WebAPI.Entities.Resources
 {
@@ -7,6 +8,6 @@ namespace ShoppingApp.WebAPI.Entities.Resources
         public int Id { get; set; }
 
         [Required]
-        public string Url { get; set; }
+        public IFormFile File { get; set; }
     }
 }

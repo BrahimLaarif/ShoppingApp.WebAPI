@@ -3,6 +3,8 @@ using AutoMapper;
 using ShoppingApp.WebAPI.Entities.Models;
 using ShoppingApp.WebAPI.Entities.Resources;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using ShoppingApp.WebAPI.Common.Utilities;
 
 namespace ShoppingApp.WebAPI.Mapping
 {
@@ -17,7 +19,8 @@ namespace ShoppingApp.WebAPI.Mapping
                 .ForMember(mr => mr.Sizes, opt => opt.MapFrom(m => m.ModelSizes.Select(ms => ms.SizeId)));
             CreateMap<Color, ColorResource>();
             CreateMap<Size, SizeResource>();
-            CreateMap<Photo, PhotoResource>();
+            CreateMap<Photo, PhotoResource>()
+                .ForMember(pr => pr.Url, opt => opt.ResolveUsing<UrlResolver>());
             
             // Mapping POST request
             CreateMap<SaveProductResource, Product>()

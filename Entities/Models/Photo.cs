@@ -11,6 +11,11 @@ namespace ShoppingApp.WebAPI.Entities.Models
         public virtual Model Model { get; set; }
 
         [Required]
-        public string Url { get; set; }
+        public string FilePath { get; set; }
+
+        [Required]
+        public string FileName { get; set; }
+
+        public long Length { get; set; }
     }
 }

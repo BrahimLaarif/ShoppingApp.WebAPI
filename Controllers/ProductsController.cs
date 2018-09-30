@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingApp.WebAPI.Data;
@@ -11,6 +12,7 @@ using ShoppingApp.WebAPI.Entities.Resources;
 
 namespace ShoppingApp.WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/products")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -26,6 +28,7 @@ namespace ShoppingApp.WebAPI.Controllers
             this.mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
@@ -36,6 +39,7 @@ namespace ShoppingApp.WebAPI.Controllers
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}", Name = nameof(GetProduct))]
         public async Task<IActionResult> GetProduct(int id)
         {

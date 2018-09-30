@@ -126,13 +126,30 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             return await context.Users.SingleOrDefaultAsync(u => u.Email == email);
         }
 
+        public async Task<User> GetUserByEmailAndPassword(string email, string password)
+        {
+            var user = await context.Users.SingleOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (!VerifyPasswordHash(password, user.PasswordSalt, user.PasswordHash))
+            {
+                return null;
+            }
+
+            return user;
+        }
+
         public void AddUser(User user, string password)
         {
-            using(var hmac = new HMACSHA512())
-            {
-                user.PasswordSalt = hmac.Key;
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            }
+            byte[] passwordSalt, passwordHash;
+            CreatePasswordHash(password, out passwordSalt, out passwordHash);
+
+            user.PasswordSalt = passwordSalt;
+            user.PasswordHash = passwordHash;
 
             context.Users.Add(user);
         }
@@ -140,6 +157,33 @@ namespace ShoppingApp.WebAPI.Data.Repositories
         public void RemoveUser(User user)
         {
             context.Users.Remove(user);
+        }
+
+        private void CreatePasswordHash(string password, out byte[] passwordSalt, out byte[] passwordHash)
+        {
+            using(var hmac = new HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        private bool VerifyPasswordHash(string password, byte[] passwordSalt, byte[] passwordHash)
+        {
+            using(var hmac = new HMACSHA512(passwordSalt))
+            {
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                for(var i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != passwordHash[i])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }

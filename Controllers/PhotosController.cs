@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using ShoppingApp.WebAPI.Data;
 using ShoppingApp.WebAPI.Data.Repositories;
 using ShoppingApp.WebAPI.Entities.Models;
@@ -17,6 +17,7 @@ using ShoppingApp.WebAPI.Services;
 
 namespace ShoppingApp.WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/products/{productId}/models/{modelId}/photos")]
     [ApiController]
     public class PhotosController : ControllerBase

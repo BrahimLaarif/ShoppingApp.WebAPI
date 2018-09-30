@@ -24,7 +24,7 @@ namespace ShoppingApp.WebAPI.Services
 
         public async Task<Photo> Upload(Model model, IFormFile file)
         {
-            var uploadsFolderName = configuration.GetSection("UploadsFolderName").Value;
+            var uploadsFolderName = configuration.GetSection("FileUpload:Folder").Value;
             var uploadsFolderPath = Path.Combine(hosting.WebRootPath, uploadsFolderName);
 
             if (!Directory.Exists(uploadsFolderPath))

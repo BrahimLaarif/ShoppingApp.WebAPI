@@ -22,7 +22,8 @@ namespace ShoppingApp.WebAPI.Mapping
             CreateMap<Size, SizeResource>();
             CreateMap<Photo, PhotoResource>()
                 .ForMember(pr => pr.Url, opt => opt.ResolveUsing<UrlResolver>());
-            CreateMap<User, UserResource>();
+            CreateMap<User, UserResource>()
+                .ForMember(ur => ur.FullName, opt => opt.MapFrom(u => $"{u.FirstName} {u.LastName}"));
             
             // Mapping POST request
             CreateMap<SaveProductResource, Product>();

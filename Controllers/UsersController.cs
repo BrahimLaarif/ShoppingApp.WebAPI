@@ -1,7 +1,14 @@
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using ShoppingApp.WebAPI.Data;
 using ShoppingApp.WebAPI.Data.Repositories;
 using ShoppingApp.WebAPI.Entities.Models;
@@ -9,6 +16,7 @@ using ShoppingApp.WebAPI.Entities.Resources;
 
 namespace ShoppingApp.WebAPI.Controllers
 {
+    [Authorize]
     [Route("/api/users")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -16,12 +24,14 @@ namespace ShoppingApp.WebAPI.Controllers
         private readonly IApplicationRepository repository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IConfiguration configuration;
 
-        public UsersController(IApplicationRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+        public UsersController(IApplicationRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.configuration = configuration;
         }
 
         [HttpGet]
@@ -49,6 +59,7 @@ namespace ShoppingApp.WebAPI.Controllers
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddUserResource payload)
         {
@@ -68,19 +79,42 @@ namespace ShoppingApp.WebAPI.Controllers
             return CreatedAtRoute(nameof(GetUser), new { id = user.Id }, result);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserResource payload)
         {
-            var user = await repository.GetUserByEmail(payload.Email);
+            var user = await repository.GetUserByEmailAndPassword(payload.Email, payload.Password);
 
             if (user == null)
             {
-                return BadRequest("Incorrect email or password");
+                return BadRequest(new { Message = "Username or password is incorrect" });
             }
 
-            // Check password
+            var claims = new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.GivenName, $"{user.FirstName} {user.LastName}")
+            };
 
-            return Ok(user);
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration.GetSection("Jwt:Key").Value));
+
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(7),
+                SigningCredentials = credentials
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            var result = new { Token = tokenHandler.WriteToken(token) };
+
+            return Ok(result);
         }
 
         [HttpPut("{id}")]

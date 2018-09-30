@@ -29,6 +29,7 @@ namespace ShoppingApp.WebAPI.Data.Repositories
         Task<List<User>> GetUsers();
         Task<User> GetUser(int id);
         Task<User> GetUserByEmail(string email);
+        Task<User> GetUserByEmailAndPassword(string email, string password);
         void AddUser(User user, string password);
         void RemoveUser(User user);
     }

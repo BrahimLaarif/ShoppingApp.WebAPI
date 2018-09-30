@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShoppingApp.WebAPI.Entities.Models
@@ -30,9 +32,12 @@ namespace ShoppingApp.WebAPI.Entities.Models
 
         public DateTime Created { get; set; }
 
+        public ICollection<Order> Orders { get; set; }
+
         public User()
         {
             Created = DateTime.Now;
+            Orders = new Collection<Order>();
         }
     }
 }

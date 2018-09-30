@@ -17,7 +17,7 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             this.context = context;
         }
 
-        public async Task<List<Category>> GetCategories()
+        public async Task<IEnumerable<Category>> GetCategories()
         {
             return await context.Categories.ToListAsync();
         }
@@ -27,7 +27,7 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             return await context.Categories.FindAsync(id);
         }
 
-        public async Task<List<Color>> GetColors()
+        public async Task<IEnumerable<Color>> GetColors()
         {
             return await context.Colors.ToListAsync();
         }
@@ -37,7 +37,7 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             return await context.Colors.FindAsync(id);
         }
 
-        public async Task<List<Size>> GetSizes()
+        public async Task<IEnumerable<Size>> GetSizes()
         {
             return await context.Sizes.ToListAsync();
         }
@@ -47,7 +47,7 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             return await context.Sizes.FindAsync(id);
         }
 
-        public async Task<List<Product>> GetProducts()
+        public async Task<IEnumerable<Product>> GetProducts()
         {
             return await context.Products
                 .Include(p => p.Category)
@@ -77,7 +77,7 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             context.Products.Remove(product);
         }
 
-        public async Task<List<Model>> GetModels(int productId)
+        public async Task<IEnumerable<Model>> GetModels(int productId)
         {
             return await context.Models
                 .Include(m => m.Color)
@@ -97,7 +97,7 @@ namespace ShoppingApp.WebAPI.Data.Repositories
                 .SingleOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task<List<Photo>> GetPhotos(int modelId)
+        public async Task<IEnumerable<Photo>> GetPhotos(int modelId)
         {
             return await context.Photos
                 .Where(p => p.ModelId == modelId)
@@ -111,7 +111,7 @@ namespace ShoppingApp.WebAPI.Data.Repositories
                 .SingleOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task<List<User>> GetUsers()
+        public async Task<IEnumerable<User>> GetUsers()
         {
             return await context.Users.ToListAsync();
         }
@@ -184,6 +184,16 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             }
 
             return true;
+        }
+
+        public async Task<IEnumerable<Order>> GetOrders()
+        {
+            return await context.Orders.ToListAsync();
+        }
+
+        public async Task<Order> GetOrder(int id)
+        {
+            return await context.Orders.FindAsync(id);
         }
     }
 }

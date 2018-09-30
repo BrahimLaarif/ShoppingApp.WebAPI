@@ -12,6 +12,7 @@ namespace ShoppingApp.WebAPI.Data
         public DbSet<Model> Models { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

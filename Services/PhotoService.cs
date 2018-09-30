@@ -53,5 +53,22 @@ namespace ShoppingApp.WebAPI.Services
 
             return photo;
         }
+
+        public bool Delete(string fileName)
+        {
+            var uploadsFolderName = configuration.GetSection("FileUpload:Folder").Value;
+            var uploadsFolderPath = Path.Combine(hosting.WebRootPath, uploadsFolderName);
+
+            var filePath = Path.Combine(uploadsFolderPath, fileName);
+
+            if ((System.IO.File.Exists(filePath)))
+            {
+                System.IO.File.Delete(filePath);
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }

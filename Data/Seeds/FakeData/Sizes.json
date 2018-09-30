@@ -1,14 +1,17 @@
 [
     {
-        "Name": "Size 1"
+        "Name": "S"
     },
     {
-        "Name": "Size 2"
+        "Name": "M"
     },
     {
-        "Name": "Size 3"
+        "Name": "L"
     },
     {
-        "Name": "Size 4"
+        "Name": "XL"
+    },
+    {
+        "Name": "XXL"
     }
 ]

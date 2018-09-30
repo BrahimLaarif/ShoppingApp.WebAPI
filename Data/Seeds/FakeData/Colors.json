@@ -1,14 +1,17 @@
 [
     {
-        "Name": "Color 1"
+        "Name": "Noir"
     },
     {
-        "Name": "Color 2"
+        "Name": "Blanc"
     },
     {
-        "Name": "Color 3"
+        "Name": "Gris"
     },
     {
-        "Name": "Color 4"
+        "Name": "Bleu"
+    },
+    {
+        "Name": "Beige"
     }
 ]

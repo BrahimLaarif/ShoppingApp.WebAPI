@@ -17,7 +17,7 @@ namespace ShoppingApp.WebAPI.Mapping
             CreateMap<Category, CategoryResource>();
             CreateMap<Product, ProductResource>();
             CreateMap<Model, ModelResource>()
-                .ForMember(mr => mr.Sizes, opt => opt.MapFrom(m => m.ModelSizes.Select(ms => ms.SizeId)));
+                .ForMember(mr => mr.Sizes, opt => opt.MapFrom(m => m.ModelSizes.Select(ms => ms.Size)));
             CreateMap<Color, ColorResource>();
             CreateMap<Size, SizeResource>();
             CreateMap<Photo, PhotoResource>()

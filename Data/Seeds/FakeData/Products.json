@@ -1,20 +1,104 @@
 [
     {
         "CategoryId": 1,
-        "Name": "Product 1",
+        "Name": "Chemise Homme",
         "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mi neque, luctus sit amet semper condimentum, feugiat sed purus. Integer pretium at tortor elementum posuere.",
-        "Created": "2018-09-25T22:47:32",
+        "Created": "2018-09-30T10:13:32",
         "Models": [
             {
-                "ColorId": 1,
+                "ColorId": 2,
                 "ModelSizes": [
                     {
-                        "SizeId": 1
+                        "SizeId": 3
+                    },
+                    {
+                        "SizeId": 4
                     }
                 ],
-                "Photos": [],
-                "Price": 100.00
+                "Photos": [
+                    {
+                        "FilePath": "fake-uploads\\cf57d5fa-a475-4208-9ca8-1225a1fbd6e1.jpg",
+                        "FileName": "cf57d5fa-a475-4208-9ca8-1225a1fbd6e1.jpg",
+                        "Length": 174718
+                    },
+                    {
+                        "FilePath": "fake-uploads\\35bcd949-991e-4684-8743-da424cbb97ef.jpg",
+                        "FileName": "35bcd949-991e-4684-8743-da424cbb97ef.jpg",
+                        "Length": 183967
+                    }
+                ],
+                "Price": 24.99
+            }
+        ]
+    },
+    {
+        "CategoryId": 4,
+        "Name": "Pantalon Homme",
+        "Description": "Nulla facilisi. Phasellus viverra, quam ac accumsan gravida, lorem tellus luctus augue, quis lacinia ipsum erat quis libero. In dapibus nibh libero, sed feugiat est bibendum ut.",
+        "Created": "2018-09-30T10:29:42",
+        "Models": [
+            {
+                "ColorId": 4,
+                "ModelSizes": [
+                    {
+                        "SizeId": 3
+                    },
+                    {
+                        "SizeId": 4
+                    },
+                    {
+                        "SizeId": 5
+                    }
+                ],
+                "Photos": [
+                    {
+                        "FilePath": "fake-uploads\\97544bd8-e549-4557-a437-b1a544923f50.jpg",
+                        "FileName": "97544bd8-e549-4557-a437-b1a544923f50.jpg",
+                        "Length": 79067
+                    },
+                    {
+                        "FilePath": "fake-uploads\\fe028192-f94d-4f4d-93cc-e578a5e7a622.jpg",
+                        "FileName": "fe028192-f94d-4f4d-93cc-e578a5e7a622.jpg",
+                        "Length": 111098
+                    }
+                ],
+                "Price": 69.99
             },
+            {
+                "ColorId": 5,
+                "ModelSizes": [
+                    {
+                        "SizeId": 3
+                    },
+                    {
+                        "SizeId": 4
+                    },
+                    {
+                        "SizeId": 5
+                    }
+                ],
+                "Photos": [
+                    {
+                        "FilePath": "fake-uploads\\283e0108-92e1-4ca5-be7c-9e34d35dd152.jpg",
+                        "FileName": "283e0108-92e1-4ca5-be7c-9e34d35dd152.jpg",
+                        "Length": 96932
+                    },
+                    {
+                        "FilePath": "fake-uploads\\84fb4918-1639-4cf4-bac4-832c6631a7d8.jpg",
+                        "FileName": "84fb4918-1639-4cf4-bac4-832c6631a7d8.jpg",
+                        "Length": 93154
+                    }
+                ],
+                "Price": 69.99
+            }
+        ]
+    },
+    {
+        "CategoryId": 2,
+        "Name": "T-shirt Homme",
+        "Description": "Cras dictum feugiat massa, ac dictum odio accumsan vel. Praesent tempus porta dictum. Morbi ac massa quis quam dignissim efficitur ac eu neque.",
+        "Created": "2018-09-30T10:36:14",
+        "Models": [
             {
                 "ColorId": 2,
                 "ModelSizes": [
@@ -25,8 +109,51 @@
                         "SizeId": 2
                     }
                 ],
-                "Photos": [],
-                "Price": 200.00
+                "Photos": [
+                    {
+                        "FilePath": "fake-uploads\\2897ba94-1f4b-4c26-9664-fb75733029fc.jpg",
+                        "FileName": "2897ba94-1f4b-4c26-9664-fb75733029fc.jpg",
+                        "Length": 162951
+                    },
+                    {
+                        "FilePath": "fake-uploads\\bd484736-9532-415f-be72-d9b25a8d70d8.jpg",
+                        "FileName": "bd484736-9532-415f-be72-d9b25a8d70d8.jpg",
+                        "Length": 90512
+                    }
+                ],
+                "Price": 9.99
+            }
+        ]
+    },
+    {
+        "CategoryId": 3,
+        "Name": "Parka / Trench Homme",
+        "Description": "Duis ullamcorper enim dolor, vitae finibus ipsum elementum sit amet. Aenean urna sapien, iaculis et enim ac, pulvinar ultrices leo. Duis et consectetur tortor.",
+        "Created": "2018-09-30T10:43:42",
+        "Models": [
+            {
+                "ColorId": 4,
+                "ModelSizes": [
+                    {
+                        "SizeId": 2
+                    },
+                    {
+                        "SizeId": 3
+                    }
+                ],
+                "Photos": [
+                    {
+                        "FilePath": "fake-uploads\\17a8bcb8-f716-4e41-abbe-8f620a22d0dd.jpg",
+                        "FileName": "17a8bcb8-f716-4e41-abbe-8f620a22d0dd.jpg",
+                        "Length": 167351
+                    },
+                    {
+                        "FilePath": "fake-uploads\\bf8eb071-0bd1-4d07-bb00-71f1d44b675e.jpg",
+                        "FileName": "bf8eb071-0bd1-4d07-bb00-71f1d44b675e.jpg",
+                        "Length": 101799
+                    }
+                ],
+                "Price": 9.99
             }
         ]
     }

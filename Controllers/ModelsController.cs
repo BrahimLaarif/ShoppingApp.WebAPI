@@ -9,6 +9,7 @@ using ShoppingApp.WebAPI.Data;
 using ShoppingApp.WebAPI.Data.Repositories;
 using ShoppingApp.WebAPI.Entities.Models;
 using ShoppingApp.WebAPI.Entities.Resources;
+using ShoppingApp.WebAPI.Services;
 
 namespace ShoppingApp.WebAPI.Controllers
 {
@@ -20,12 +21,14 @@ namespace ShoppingApp.WebAPI.Controllers
         private readonly IApplicationRepository repository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IPhotoService photoService;
 
-        public ModelsController(IApplicationRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+        public ModelsController(IApplicationRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.photoService = photoService;
         }
 
         [HttpGet]
@@ -163,7 +166,14 @@ namespace ShoppingApp.WebAPI.Controllers
             }
 
             product.Models.Remove(model);
-            await unitOfWork.CompleteAsync();
+
+            if (await unitOfWork.CompleteAsync() > 0)
+            {
+                foreach (var photo in model.Photos)
+                {
+                    photoService.Delete(photo.FileName);
+                }
+            }
 
             return NoContent();
         }

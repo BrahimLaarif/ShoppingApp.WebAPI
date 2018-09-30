@@ -8,13 +8,13 @@ namespace ShoppingApp.WebAPI.Entities.Resources
     {
         public int Id { get; set; }
         public ColorResource Color { get; set; }
-        public ICollection<int> Sizes { get; set; }
+        public ICollection<Size> Sizes { get; set; }
         public ICollection<PhotoResource> Photos { get; set; }
         public double Price { get; set; }
 
         public ModelResource()
         {
-            Sizes = new Collection<int>();
+            Sizes = new Collection<Size>();
             Photos = new Collection<PhotoResource>();
         }
     }

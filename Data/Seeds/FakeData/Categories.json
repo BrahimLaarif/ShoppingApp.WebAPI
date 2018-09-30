@@ -1,14 +1,17 @@
 [
     {
-        "Name": "Category 1"
+        "Name": "Chemise"
     },
     {
-        "Name": "Category 2"
+        "Name": "T-Shirt"
     },
     {
-        "Name": "Category 3"
+        "Name": "Outwear"
     },
     {
-        "Name": "Category 4"
+        "Name": "Pantalon"
+    },
+    {
+        "Name": "Accessoires"
     }
 ]

@@ -45,7 +45,8 @@ namespace ShoppingApp.WebAPI
             services.AddHttpContextAccessor();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt => {
-                    opt.TokenValidationParameters = new TokenValidationParameters(){
+                    opt.TokenValidationParameters = new TokenValidationParameters()
+                    {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("Jwt:Key").Value)),
                         ValidateIssuer = false,

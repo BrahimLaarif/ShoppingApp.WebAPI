@@ -7,5 +7,6 @@ namespace ShoppingApp.WebAPI.Services
     public interface IPhotoService
     {
         Task<Photo> Upload(Model model, IFormFile file);
+        bool Delete(string fileName);
     }
 }

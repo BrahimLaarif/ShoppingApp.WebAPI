@@ -109,7 +109,11 @@ namespace ShoppingApp.WebAPI.Controllers
             }
 
             model.Photos.Remove(photo);
-            await unitOfWork.CompleteAsync();
+            
+            if (await unitOfWork.CompleteAsync() > 0)
+            {
+                photoService.Delete(photo.FileName);
+            }
 
             return NoContent();
         }

@@ -6,7 +6,6 @@ namespace ShoppingApp.WebAPI.Entities.Resources
 {
     public class SaveModelResource
     {
-        public int Id { get; set; }
         public int ColorId { get; set; }
 
         [EnsureOneElementAttribute(ErrorMessage = "At least one size is required")]

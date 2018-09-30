@@ -21,12 +21,11 @@ namespace ShoppingApp.WebAPI.Mapping
             CreateMap<Size, SizeResource>();
             CreateMap<Photo, PhotoResource>()
                 .ForMember(pr => pr.Url, opt => opt.ResolveUsing<UrlResolver>());
+            CreateMap<User, UserResource>();
             
             // Mapping POST request
-            CreateMap<SaveProductResource, Product>()
-                .ForMember(p => p.Id, opt => opt.Ignore());
+            CreateMap<SaveProductResource, Product>();
             CreateMap<SaveModelResource, Model>()
-                .ForMember(m => m.Id, opt => opt.Ignore())
                 .ForMember(m => m.ModelSizes, opt => opt.Ignore())
                 .AfterMap((mr, m) => {
                     // Remove unselected ModelSizes
@@ -70,8 +69,9 @@ namespace ShoppingApp.WebAPI.Mapping
                     }
                     */
                 });
-            CreateMap<SavePhotoResource, Photo>()
-                .ForMember(p => p.Id, opt => opt.Ignore());
+            CreateMap<SavePhotoResource, Photo>();
+            CreateMap<AddUserResource, User>();
+            CreateMap<UpdateUserResource, User>();
         }
     }
 }

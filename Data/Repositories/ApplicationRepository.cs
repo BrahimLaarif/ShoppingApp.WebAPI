@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ShoppingApp.WebAPI.Entities.Models;
@@ -107,6 +109,32 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             return await context.Photos
                 .Where(p => p.ModelId == modelId)
                 .SingleOrDefaultAsync(m => m.Id == id);
+        }
+
+        public async Task<List<User>> GetUsers()
+        {
+            return await context.Users.ToListAsync();
+        }
+
+        public async Task<User> GetUser(int id)
+        {
+            return await context.Users.FindAsync(id);
+        }
+
+        public void AddUser(User user, string password)
+        {
+            using(var hmac = new HMACSHA512())
+            {
+                user.PasswordSalt = hmac.Key;
+                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
+
+            context.Users.Add(user);
+        }
+
+        public void RemoveUser(User user)
+        {
+            context.Users.Remove(user);
         }
     }
 }

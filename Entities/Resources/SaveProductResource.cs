@@ -7,7 +7,6 @@ namespace ShoppingApp.WebAPI.Entities.Resources
 {
     public class SaveProductResource
     {
-        public int Id { get; set; }
         public int CategoryId { get; set; }
 
         [Required]

@@ -25,5 +25,10 @@ namespace ShoppingApp.WebAPI.Data.Repositories
 
         Task<List<Photo>> GetPhotos(int modelId);
         Task<Photo> GetPhoto(int modelId, int id);
+
+        Task<List<User>> GetUsers();
+        Task<User> GetUser(int id);
+        void AddUser(User user, string password);
+        void RemoveUser(User user);
     }
 }

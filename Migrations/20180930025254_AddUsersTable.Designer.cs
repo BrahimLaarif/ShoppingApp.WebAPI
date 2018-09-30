@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShoppingApp.WebAPI.Data;
 
 namespace ShoppingApp.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180930025254_AddUsersTable")]
+    partial class AddUsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,10 +166,7 @@ namespace ShoppingApp.WebAPI.Migrations
                     b.Property<string>("LastName")
                         .IsRequired();
 
-                    b.Property<byte[]>("PasswordHash")
-                        .IsRequired();
-
-                    b.Property<byte[]>("PasswordSalt")
+                    b.Property<string>("Password")
                         .IsRequired();
 
                     b.Property<string>("ZipCode");

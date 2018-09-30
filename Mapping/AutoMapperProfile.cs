@@ -5,6 +5,7 @@ using ShoppingApp.WebAPI.Entities.Resources;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using ShoppingApp.WebAPI.Common.Utilities;
+using ShoppingApp.WebAPI.Common.Extensions;
 
 namespace ShoppingApp.WebAPI.Mapping
 {
@@ -70,8 +71,12 @@ namespace ShoppingApp.WebAPI.Mapping
                     */
                 });
             CreateMap<SavePhotoResource, Photo>();
-            CreateMap<AddUserResource, User>();
-            CreateMap<UpdateUserResource, User>();
+            CreateMap<AddUserResource, User>()
+                .ForMember(u => u.FirstName, opt => opt.MapFrom(ur => ur.FirstName.ToFirstUpper()))
+                .ForMember(u => u.LastName, opt => opt.MapFrom(ur => ur.LastName.ToFirstUpper()));
+            CreateMap<UpdateUserResource, User>()
+                .ForMember(u => u.FirstName, opt => opt.MapFrom(ur => ur.FirstName.ToFirstUpper()))
+                .ForMember(u => u.LastName, opt => opt.MapFrom(ur => ur.LastName.ToFirstUpper()));
         }
     }
 }

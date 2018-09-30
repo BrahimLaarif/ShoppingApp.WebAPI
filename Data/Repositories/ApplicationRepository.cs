@@ -121,6 +121,11 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             return await context.Users.FindAsync(id);
         }
 
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await context.Users.SingleOrDefaultAsync(u => u.Email == email);
+        }
+
         public void AddUser(User user, string password)
         {
             using(var hmac = new HMACSHA512())

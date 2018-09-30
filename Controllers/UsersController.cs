@@ -62,6 +62,21 @@ namespace ShoppingApp.WebAPI.Controllers
             return CreatedAtRoute(nameof(GetUser), new { id = user.Id }, result);
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginUserResource payload)
+        {
+            var user = await repository.GetUserByEmail(payload.Email);
+
+            if (user == null)
+            {
+                return BadRequest("Incorrect email or password");
+            }
+
+            // Check password
+
+            return Ok(user);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, UpdateUserResource payload)
         {

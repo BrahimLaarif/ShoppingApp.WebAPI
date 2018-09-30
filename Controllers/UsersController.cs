@@ -52,6 +52,12 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddUserResource payload)
         {
+            if (await repository.GetUserByEmail(payload.Email) != null)
+            {
+                ModelState.AddModelError("Email", "Email already exists");
+                return BadRequest(ModelState);
+            }
+
             var user = mapper.Map<User>(payload);
 
             repository.AddUser(user, payload.Password);

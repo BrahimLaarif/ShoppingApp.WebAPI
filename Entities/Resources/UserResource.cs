@@ -1,3 +1,5 @@
+using System;
+
 namespace ShoppingApp.WebAPI.Entities.Resources
 {
     public class UserResource
@@ -11,5 +13,6 @@ namespace ShoppingApp.WebAPI.Entities.Resources
         public string ZipCode { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+        public DateTime Created { get; set; }
     }
 }

@@ -24,6 +24,7 @@ namespace ShoppingApp.WebAPI.Data.Seeds
             SizeSeed();
             ProductSeed();
             UserSeed();
+            OrderSeed();
         }
 
         private void CategorySeed()
@@ -37,7 +38,6 @@ namespace ShoppingApp.WebAPI.Data.Seeds
                 context.SaveChanges();
             }
         }
-
 
         private void ColorSeed()
         {
@@ -92,6 +92,18 @@ namespace ShoppingApp.WebAPI.Data.Seeds
                 }
 
                 context.Users.AddRange(users);
+                context.SaveChanges();
+            }
+        }
+
+        private void OrderSeed()
+        {
+            if (!context.Orders.Any())
+            {
+                var ordersJsonData = System.IO.File.ReadAllText("Data/Seeds/FakeData/Orders.json");
+                var orders = JsonConvert.DeserializeObject<IEnumerable<Order>>(ordersJsonData);
+
+                context.Orders.AddRange(orders);
                 context.SaveChanges();
             }
         }

@@ -26,9 +26,9 @@ namespace ShoppingApp.WebAPI.Entities.Models
 
     public static class ShippingCost
     {
-        public static readonly double Poste = 30;
-        public static readonly double UPS = 60;
-        public static readonly double FedEX = 70;
+        public static readonly double Poste = 20;
+        public static readonly double UPS = 40;
+        public static readonly double FedEX = 80;
 
         public static double GetCost(Enum shippingMethod)
         {

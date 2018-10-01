@@ -27,7 +27,7 @@
                         "Length": 183967
                     }
                 ],
-                "Price": 24.99
+                "Price": 25
             }
         ]
     },
@@ -62,34 +62,7 @@
                         "Length": 111098
                     }
                 ],
-                "Price": 69.99
-            },
-            {
-                "ColorId": 5,
-                "ModelSizes": [
-                    {
-                        "SizeId": 3
-                    },
-                    {
-                        "SizeId": 4
-                    },
-                    {
-                        "SizeId": 5
-                    }
-                ],
-                "Photos": [
-                    {
-                        "FilePath": "fake-uploads\\283e0108-92e1-4ca5-be7c-9e34d35dd152.jpg",
-                        "FileName": "283e0108-92e1-4ca5-be7c-9e34d35dd152.jpg",
-                        "Length": 96932
-                    },
-                    {
-                        "FilePath": "fake-uploads\\84fb4918-1639-4cf4-bac4-832c6631a7d8.jpg",
-                        "FileName": "84fb4918-1639-4cf4-bac4-832c6631a7d8.jpg",
-                        "Length": 93154
-                    }
-                ],
-                "Price": 69.99
+                "Price": 70
             }
         ]
     },
@@ -121,7 +94,7 @@
                         "Length": 90512
                     }
                 ],
-                "Price": 9.99
+                "Price": 10
             }
         ]
     },
@@ -153,7 +126,7 @@
                         "Length": 101799
                     }
                 ],
-                "Price": 9.99
+                "Price": 130
             }
         ]
     }

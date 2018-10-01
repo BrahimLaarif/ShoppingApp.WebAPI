@@ -1,0 +1,26 @@
+[
+    {
+        "userId": 1,
+        "status": 0,
+        "Reference": "C199A985",
+        "shippingMethod": 0,
+        "items": [
+            {
+                "modelId": 1,
+                "sizeId": 3,
+                "quantity": 1,
+                "amount": 25
+            },
+            {
+                "modelId": 2,
+                "sizeId": 3,
+                "quantity": 1,
+                "amount": 70
+            }
+        ],
+        "ItemsTotal": 95,
+        "ShippingTotal": 20,
+        "PurchaseTotal": 115,
+        "Created": "2018-09-30T13:23:32"
+    }
+]

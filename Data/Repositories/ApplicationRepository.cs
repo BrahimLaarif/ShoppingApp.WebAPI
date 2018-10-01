@@ -82,6 +82,8 @@ namespace ShoppingApp.WebAPI.Data.Repositories
         {
             return await context.Models
                 .Include(m => m.Color)
+                .Include(m => m.Product)
+                .Include(m => m.Product).ThenInclude(p => p.Category)
                 .Include(m => m.ModelSizes).ThenInclude(ms => ms.Size)
                 .Include(m => m.Photos)
                 .Where(m => m.ProductId == productId)
@@ -92,6 +94,8 @@ namespace ShoppingApp.WebAPI.Data.Repositories
         {
             return await context.Models
                 .Include(m => m.Color)
+                .Include(m => m.Product)
+                .Include(m => m.Product).ThenInclude(p => p.Category)
                 .Include(m => m.ModelSizes).ThenInclude(ms => ms.Size)
                 .Include(m => m.Photos)
                 .Where(m => m.ProductId == productId)
@@ -102,6 +106,8 @@ namespace ShoppingApp.WebAPI.Data.Repositories
         {
             return await context.Models
                 .Include(m => m.Color)
+                .Include(m => m.Product)
+                .Include(m => m.Product).ThenInclude(p => p.Category)
                 .Include(m => m.ModelSizes).ThenInclude(ms => ms.Size)
                 .Include(m => m.Photos)
                 .SingleOrDefaultAsync(m => m.Id == id);

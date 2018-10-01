@@ -94,7 +94,7 @@ namespace ShoppingApp.WebAPI.Controllers
             repository.AddOrder(order);
             await unitOfWork.CompleteAsync();
 
-            var result = await repository.GetOrder(order.Id);
+            var result = mapper.Map<OrderResource>(order);
 
             return CreatedAtRoute(nameof(GetOrder), new { id = order.Id }, result);
         }

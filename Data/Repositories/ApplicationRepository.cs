@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -77,7 +78,7 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             context.Products.Remove(product);
         }
 
-        public async Task<IEnumerable<Model>> GetModels(int productId)
+        public async Task<IEnumerable<Model>> GetModelsByProductId(int productId)
         {
             return await context.Models
                 .Include(m => m.Color)
@@ -87,13 +88,22 @@ namespace ShoppingApp.WebAPI.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Model> GetModel(int productId, int id)
+        public async Task<Model> GetModelByProductId(int productId, int id)
         {
             return await context.Models
                 .Include(m => m.Color)
                 .Include(m => m.ModelSizes).ThenInclude(ms => ms.Size)
                 .Include(m => m.Photos)
                 .Where(m => m.ProductId == productId)
+                .SingleOrDefaultAsync(m => m.Id == id);
+        }
+
+        public async Task<Model> GetModel(int id)
+        {
+            return await context.Models
+                .Include(m => m.Color)
+                .Include(m => m.ModelSizes).ThenInclude(ms => ms.Size)
+                .Include(m => m.Photos)
                 .SingleOrDefaultAsync(m => m.Id == id);
         }
 
@@ -143,31 +153,6 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             return user;
         }
 
-        public void AddUser(User user, string password)
-        {
-            byte[] passwordSalt, passwordHash;
-            CreatePasswordHash(password, out passwordSalt, out passwordHash);
-
-            user.PasswordSalt = passwordSalt;
-            user.PasswordHash = passwordHash;
-
-            context.Users.Add(user);
-        }
-
-        public void RemoveUser(User user)
-        {
-            context.Users.Remove(user);
-        }
-
-        private void CreatePasswordHash(string password, out byte[] passwordSalt, out byte[] passwordHash)
-        {
-            using(var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            }
-        }
-
         private bool VerifyPasswordHash(string password, byte[] passwordSalt, byte[] passwordHash)
         {
             using(var hmac = new HMACSHA512(passwordSalt))
@@ -186,14 +171,71 @@ namespace ShoppingApp.WebAPI.Data.Repositories
             return true;
         }
 
+        public void AddUser(User user, string password)
+        {
+            byte[] passwordSalt, passwordHash;
+            CreatePasswordHash(password, out passwordSalt, out passwordHash);
+
+            user.PasswordSalt = passwordSalt;
+            user.PasswordHash = passwordHash;
+
+            context.Users.Add(user);
+        }
+
+        private void CreatePasswordHash(string password, out byte[] passwordSalt, out byte[] passwordHash)
+        {
+            using(var hmac = new HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        public void RemoveUser(User user)
+        {
+            context.Users.Remove(user);
+        }
+
         public async Task<IEnumerable<Order>> GetOrders()
         {
-            return await context.Orders.ToListAsync();
+            return await context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Items).ThenInclude(i => i.Model)
+                .Include(o => o.Items).ThenInclude(i => i.Model).ThenInclude(m => m.Color)
+                .Include(o => o.Items).ThenInclude(i => i.Model).ThenInclude(m => m.Photos)
+                .Include(o => o.Items).ThenInclude(i => i.Model).ThenInclude(m => m.Product)
+                .Include(o => o.Items).ThenInclude(i => i.Model).ThenInclude(m => m.Product).ThenInclude(p => p.Category)
+                .Include(o => o.Items).ThenInclude(i => i.Size)
+                .ToListAsync();
         }
 
         public async Task<Order> GetOrder(int id)
         {
-            return await context.Orders.FindAsync(id);
+            return await context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Items).ThenInclude(i => i.Model)
+                .Include(o => o.Items).ThenInclude(i => i.Model).ThenInclude(m => m.Color)
+                .Include(o => o.Items).ThenInclude(i => i.Model).ThenInclude(m => m.Photos)
+                .Include(o => o.Items).ThenInclude(i => i.Model).ThenInclude(m => m.Product)
+                .Include(o => o.Items).ThenInclude(i => i.Model).ThenInclude(m => m.Product).ThenInclude(p => p.Category)
+                .Include(o => o.Items).ThenInclude(i => i.Size)
+                .SingleOrDefaultAsync(o => o.Id == id);
+        }
+
+        public void AddOrder(Order order)
+        {
+            order.Status = Status.Pending;
+            order.Reference = Guid.NewGuid().GetHashCode().ToString("x").ToUpper();
+            order.ItemsTotal = order.Items.Select(i => i.Amount).Sum();
+            order.ShippingTotal = ShippingCost.GetCost(order.ShippingMethod);
+            order.PurchaseTotal = order.ItemsTotal + order.ShippingTotal;
+
+            context.Orders.Add(order);
+        }
+
+        public void RemoveOrder(Order order)
+        {
+            context.Orders.Remove(order);
         }
     }
 }

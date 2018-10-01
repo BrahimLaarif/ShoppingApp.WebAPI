@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShoppingApp.WebAPI.Data;
 
 namespace ShoppingApp.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181001025746_ExtendOrdersTable")]
+    partial class ExtendOrdersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,14 +122,13 @@ namespace ShoppingApp.WebAPI.Migrations
 
                     b.Property<double>("PurchaseTotal");
 
-                    b.Property<string>("Reference")
-                        .IsRequired();
+                    b.Property<string>("Reference");
 
-                    b.Property<int>("ShippingMethod");
+                    b.Property<string>("ShippingMethod");
 
                     b.Property<double>("ShippingTotal");
 
-                    b.Property<int>("Status");
+                    b.Property<string>("Status");
 
                     b.Property<int>("UserId");
 

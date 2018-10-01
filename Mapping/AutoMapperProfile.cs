@@ -24,6 +24,10 @@ namespace ShoppingApp.WebAPI.Mapping
                 .ForMember(pr => pr.Url, opt => opt.ResolveUsing<UrlResolver>());
             CreateMap<User, UserResource>()
                 .ForMember(ur => ur.FullName, opt => opt.MapFrom(u => $"{u.FirstName} {u.LastName}"));
+            CreateMap<Order, OrderResource>();
+            CreateMap<Item, ItemResource>();
+            CreateMap<Model, ItemModelResource>();
+            CreateMap<Product, ModelProductResource>();
             
             // Mapping POST request
             CreateMap<SaveProductResource, Product>();
@@ -71,13 +75,15 @@ namespace ShoppingApp.WebAPI.Mapping
                     }
                     */
                 });
-            CreateMap<SavePhotoResource, Photo>();
+            CreateMap<AddPhotoResource, Photo>();
             CreateMap<AddUserResource, User>()
                 .ForMember(u => u.FirstName, opt => opt.MapFrom(ur => ur.FirstName.ToFirstUpper()))
                 .ForMember(u => u.LastName, opt => opt.MapFrom(ur => ur.LastName.ToFirstUpper()));
             CreateMap<UpdateUserResource, User>()
                 .ForMember(u => u.FirstName, opt => opt.MapFrom(ur => ur.FirstName.ToFirstUpper()))
                 .ForMember(u => u.LastName, opt => opt.MapFrom(ur => ur.LastName.ToFirstUpper()));
+            CreateMap<AddOrderResource, Order>();
+            CreateMap<AddItemResource, Item>();
         }
     }
 }

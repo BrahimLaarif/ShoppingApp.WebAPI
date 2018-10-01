@@ -70,7 +70,7 @@ namespace ShoppingApp.WebAPI.Controllers
             }
 
             var user = mapper.Map<User>(payload);
-
+            
             repository.AddUser(user, payload.Password);
             await unitOfWork.CompleteAsync();
 

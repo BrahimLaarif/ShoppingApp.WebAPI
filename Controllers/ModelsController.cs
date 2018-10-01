@@ -41,7 +41,7 @@ namespace ShoppingApp.WebAPI.Controllers
                 return NotFound();
             }
 
-            var models = await repository.GetModels(productId);
+            var models = await repository.GetModelsByProductId(productId);
 
             var result = mapper.Map<IEnumerable<ModelResource>>(models);
 
@@ -58,7 +58,7 @@ namespace ShoppingApp.WebAPI.Controllers
                 return NotFound();
             }
 
-            var model = await repository.GetModel(productId, id);
+            var model = await repository.GetModelByProductId(productId, id);
 
             if (model == null)
             {
@@ -134,7 +134,7 @@ namespace ShoppingApp.WebAPI.Controllers
                 }
             }
 
-            var model = await repository.GetModel(productId, id);
+            var model = await repository.GetModelByProductId(productId, id);
 
             if (model == null)
             {
@@ -158,7 +158,7 @@ namespace ShoppingApp.WebAPI.Controllers
                 return NotFound();
             }
 
-            var model = await repository.GetModel(productId, id);
+            var model = await repository.GetModelByProductId(productId, id);
 
             if (model == null)
             {

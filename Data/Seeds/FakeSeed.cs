@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using Newtonsoft.Json;
 using ShoppingApp.WebAPI.Entities.Models;
 
@@ -21,6 +23,7 @@ namespace ShoppingApp.WebAPI.Data.Seeds
             ColorSeed();
             SizeSeed();
             ProductSeed();
+            UserSeed();
         }
 
         private void CategorySeed()
@@ -68,6 +71,27 @@ namespace ShoppingApp.WebAPI.Data.Seeds
                 var products = JsonConvert.DeserializeObject<IEnumerable<Product>>(productsJsonData);
 
                 context.Products.AddRange(products);
+                context.SaveChanges();
+            }
+        }
+
+        private void UserSeed()
+        {
+            if (!context.Users.Any())
+            {
+                var usersJsonData = System.IO.File.ReadAllText("Data/Seeds/FakeData/Users.json");
+                var users = JsonConvert.DeserializeObject<IEnumerable<User>>(usersJsonData);
+
+                foreach(var user in users)
+                {
+                    using(var hmac = new HMACSHA512())
+                    {
+                        user.PasswordSalt = hmac.Key;
+                        user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("123456"));
+                    }
+                }
+
+                context.Users.AddRange(users);
                 context.SaveChanges();
             }
         }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShoppingApp.WebAPI.Data;
 
 namespace ShoppingApp.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180930125159_AddItemsTable")]
+    partial class AddItemsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,11 +55,11 @@ namespace ShoppingApp.WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Amount");
-
                     b.Property<int>("ModelId");
 
                     b.Property<int>("OrderId");
+
+                    b.Property<double>("Price");
 
                     b.Property<int>("Quantity");
 
@@ -116,18 +118,7 @@ namespace ShoppingApp.WebAPI.Migrations
 
                     b.Property<DateTime>("Created");
 
-                    b.Property<double>("ItemsTotal");
-
-                    b.Property<double>("PurchaseTotal");
-
-                    b.Property<string>("Reference")
-                        .IsRequired();
-
-                    b.Property<int>("ShippingMethod");
-
-                    b.Property<double>("ShippingTotal");
-
-                    b.Property<int>("Status");
+                    b.Property<double>("Total");
 
                     b.Property<int>("UserId");
 

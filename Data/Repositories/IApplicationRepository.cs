@@ -20,8 +20,9 @@ namespace ShoppingApp.WebAPI.Data.Repositories
         void AddProduct(Product product);
         void RemoveProduct(Product product);
 
-        Task<IEnumerable<Model>> GetModels(int productId);
-        Task<Model> GetModel(int productId, int id);
+        Task<IEnumerable<Model>> GetModelsByProductId(int productId);
+        Task<Model> GetModelByProductId(int productId, int id);
+        Task<Model> GetModel(int id);
 
         Task<IEnumerable<Photo>> GetPhotos(int modelId);
         Task<Photo> GetPhoto(int modelId, int id);
@@ -35,5 +36,7 @@ namespace ShoppingApp.WebAPI.Data.Repositories
 
         Task<IEnumerable<Order>> GetOrders();
         Task<Order> GetOrder(int id);
+        void AddOrder(Order order);
+        void RemoveOrder(Order order);
     }
 }

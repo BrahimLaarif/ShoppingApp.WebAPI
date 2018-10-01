@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ShoppingApp.WebAPI.Entities.Resources
 {
-    public class SavePhotoResource
+    public class AddPhotoResource
     {
         [Required]
         public IFormFile File { get; set; }

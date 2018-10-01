@@ -38,7 +38,7 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPhotos(int productId, int modelId)
         {
-            var model = await repository.GetModel(productId, modelId);
+            var model = await repository.GetModelByProductId(productId, modelId);
 
             if (model == null)
             {
@@ -55,7 +55,7 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpGet("{id}", Name = nameof(GetPhoto))]
         public async Task<IActionResult> GetPhoto(int productId, int modelId, int id)
         {
-            var model = await repository.GetModel(productId, modelId);
+            var model = await repository.GetModelByProductId(productId, modelId);
 
             if (model == null)
             {
@@ -75,9 +75,9 @@ namespace ShoppingApp.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upload(int productId, int modelId, [FromForm] SavePhotoResource payload)
+        public async Task<IActionResult> Upload(int productId, int modelId, [FromForm] AddPhotoResource payload)
         {
-            var model = await repository.GetModel(productId, modelId);
+            var model = await repository.GetModelByProductId(productId, modelId);
 
             if (model == null)
             {
@@ -94,7 +94,7 @@ namespace ShoppingApp.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int productId, int modelId, int id)
         {
-            var model = await repository.GetModel(productId, modelId);
+            var model = await repository.GetModelByProductId(productId, modelId);
 
             if (model == null)
             {
